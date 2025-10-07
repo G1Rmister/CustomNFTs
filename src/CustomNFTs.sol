@@ -7,4 +7,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
+/**
+ * @title CustomNFTs
+ * @dev NFT contract that changes metadata based on external data sources
+ */
 contract CustomNFTs {}
