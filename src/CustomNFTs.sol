@@ -11,4 +11,6 @@ import "@openzeppelin/contracts/utils/Strings.sol";
  * @title CustomNFTs
  * @dev NFT contract that changes metadata based on external data sources
  */
-contract CustomNFTs {}
+contract CustomNFTs {
+      using Strings for uint256;
+}
