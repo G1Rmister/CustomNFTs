@@ -20,4 +20,15 @@ contract CustomNFTs {
     //IDataOracle public weatherOracle;
     //IDataOracle public timeOracle;
     //IMetadataRenderer public metadataRenderer;
+
+    // NFT State Management
+    struct NFTState {
+        uint256 lastWeatherUpdate;
+        uint256 lastTimeUpdate;
+        uint256 userActionCount;
+        string currentWeather;
+        string currentTimeOfDay;
+        address owner;
+        uint256 createdAt;
+    }
 }
