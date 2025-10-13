@@ -13,4 +13,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
  */
 contract CustomNFTs {
       using Strings for uint256;
+
+    uint256 private _tokenIdCounter;
+
 }
