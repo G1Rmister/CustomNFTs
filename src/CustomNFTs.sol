@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "./interfaces/IDataOracle.sol";
+import "./interfaces/IMetadataRenderer.sol";
 
 /**
  * @title CustomNFTs
@@ -17,9 +19,9 @@ contract CustomNFTs {
     uint256 private _tokenIdCounter;
 
     // Core interfaces
-    //IDataOracle public weatherOracle;
-    //IDataOracle public timeOracle;
-    //IMetadataRenderer public metadataRenderer;
+        IDataOracle public weatherOracle;
+    IDataOracle public timeOracle;
+    IMetadataRenderer public metadataRenderer;
 
     // NFT State Management
     struct NFTState {
