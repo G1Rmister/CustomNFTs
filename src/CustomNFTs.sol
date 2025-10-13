@@ -16,4 +16,8 @@ contract CustomNFTs {
 
     uint256 private _tokenIdCounter;
 
+   // Core interfaces
+    //IDataOracle public weatherOracle;
+    //IDataOracle public timeOracle;
+    //IMetadataRenderer public metadataRenderer;
 }
