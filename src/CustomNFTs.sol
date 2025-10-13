@@ -35,4 +35,8 @@ contract CustomNFTs {
    // Storage
     mapping(uint256 => NFTState) public nftStates;
     mapping(address => uint256[]) public userTokens;
+
+    // Constants
+    uint256 public constant UPDATE_INTERVAL = 1 hours;
+    uint256 public constant MAX_SUPPLY = 10000;
 }
