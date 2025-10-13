@@ -32,7 +32,7 @@ contract CustomNFTs {
         uint256 createdAt;
     }
 
-   // Storage
+    // Storage
     mapping(uint256 => NFTState) public nftStates;
     mapping(address => uint256[]) public userTokens;
 
