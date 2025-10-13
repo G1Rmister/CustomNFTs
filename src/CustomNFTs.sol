@@ -12,11 +12,11 @@ import "@openzeppelin/contracts/utils/Strings.sol";
  * @dev NFT contract that changes metadata based on external data sources
  */
 contract CustomNFTs {
-      using Strings for uint256;
+    using Strings for uint256;
 
     uint256 private _tokenIdCounter;
 
-   // Core interfaces
+    // Core interfaces
     //IDataOracle public weatherOracle;
     //IDataOracle public timeOracle;
     //IMetadataRenderer public metadataRenderer;
