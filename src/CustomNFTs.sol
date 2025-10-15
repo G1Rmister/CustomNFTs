@@ -48,4 +48,7 @@ contract CustomNFTs {
     event OracleUpdated(address indexed oracle, string oracleType);
     event UserAction(uint256 indexed tokenId, address indexed user, string action);
     
+       // Constants
+    uint256 public constant UPDATE_INTERVAL = 1 hours;
+    uint256 public constant MAX_SUPPLY = 10000;
 }
