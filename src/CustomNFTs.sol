@@ -41,4 +41,16 @@ contract CustomNFTs {
     // Constants
     uint256 public constant UPDATE_INTERVAL = 1 hours;
     uint256 public constant MAX_SUPPLY = 10000;
+
+    // Events
+    event NFTMinted(uint256 indexed tokenId, address indexed owner);
+    event NFTUpdated(uint256 indexed tokenId, string updateType, string newValue);
+    event OracleUpdated(address indexed oracle, string oracleType);
+    event UserAction(uint256 indexed tokenId, address indexed user, string action);
+
+    constructor(address _weatherOracle, address _timeOracle, address _metadataRenderer) ERC721("Custom NFTs", "CNFT") {
+        weatherOracle = IDataOracle(_weatherOracle);
+        timeOracle = IDataOracle(_timeOracle);
+        metadataRenderer = IMetadataRenderer(_metadataRenderer);
+    }
 }
