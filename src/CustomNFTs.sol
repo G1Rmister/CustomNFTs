@@ -81,4 +81,18 @@ contract CustomNFTs {
         emit NFTMinted(tokenId, to);
         return tokenId;
     }
+
+    function updateWeather(uint256 tokenId) external {
+        require(_exists(tokenId), "Token does not exist");
+        require(
+            block.timestamp >= nftStates[tokenId].lastWeatherUpdate + UPDATE_INTERVAL,
+            "Too early to update"
+        );
+        
+        string memory newWeather = weatherOracle.getData();
+        nftStates[tokenId].currentWeather = newWeather;
+        nftStates[tokenId].lastWeatherUpdate = block.timestamp;
+        
+        emit NFTUpdated(tokenId, "weather", newWeather);
+    }
 }
