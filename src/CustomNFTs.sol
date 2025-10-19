@@ -13,7 +13,7 @@ import "./interfaces/IMetadataRenderer.sol";
  * @title CustomNFTs
  * @dev NFT contract that changes metadata based on external data sources
  */
-contract CustomNFTs {
+contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
     using Strings for uint256;
 
     uint256 private _tokenIdCounter;
@@ -52,5 +52,47 @@ contract CustomNFTs {
         weatherOracle = IDataOracle(_weatherOracle);
         timeOracle = IDataOracle(_timeOracle);
         metadataRenderer = IMetadataRenderer(_metadataRenderer);
+    }
+
+    /**
+     * @dev Mint a new dynamic NFT
+     */
+    function mint(address to) public onlyOwner returns (uint256) {
+        require(_tokenIdCounter.current() < MAX_SUPPLY, "Max supply reached");
+
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+
+        _safeMint(to, tokenId);
+
+        // Initialize NFT state
+        nftStates[tokenId] = NFTState({
+            lastWeatherUpdate: block.timestamp,
+            lastTimeUpdate: block.timestamp,
+            userActionCount: 0,
+            currentWeather: "sunny",
+            currentTimeOfDay: _getCurrentTimeOfDay(),
+            owner: to,
+            createdAt: block.timestamp
+        });
+
+        userTokens[to].push(tokenId);
+
+        emit NFTMinted(tokenId, to);
+        return tokenId;
+    }
+
+    /**
+     * @dev Update NFT based on weather data
+     */
+    function updateWeather(uint256 tokenId) external {
+        require(_exists(tokenId), "Token does not exist");
+        require(block.timestamp >= nftStates[tokenId].lastWeatherUpdate + UPDATE_INTERVAL, "Too early to update");
+
+        string memory newWeather = weatherOracle.getData();
+        nftStates[tokenId].currentWeather = newWeather;
+        nftStates[tokenId].lastWeatherUpdate = block.timestamp;
+
+        emit NFTUpdated(tokenId, "weather", newWeather);
     }
 }
