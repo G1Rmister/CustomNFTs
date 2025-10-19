@@ -13,7 +13,7 @@ import "./interfaces/IMetadataRenderer.sol";
  * @title CustomNFTs
  * @dev NFT contract that changes metadata based on external data sources
  */
-contract CustomNFTs {
+contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
     using Strings for uint256;
 
     uint256 private _tokenIdCounter;
