@@ -96,6 +96,9 @@ contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
         emit NFTUpdated(tokenId, "weather", newWeather);
     }
 
+    /**
+     * @dev Update NFT based on time of day
+     */
     function updateTimeOfDay(uint256 tokenId) external {
         require(_exists(tokenId), "Token does not exist");
         require(
