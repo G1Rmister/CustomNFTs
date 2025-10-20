@@ -105,4 +105,14 @@ contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
             block.timestamp >= nftStates[tokenId].lastTimeUpdate + UPDATE_INTERVAL,
             "Too early to update"
         );
+
+            function performUserAction(uint256 tokenId, string calldata action) external {
+        require(_exists(tokenId), "Token does not exist");
+        require(ownerOf(tokenId) == msg.sender, "Not token owner");
+        
+        nftStates[tokenId].userActionCount++;
+        
+        emit UserAction(tokenId, msg.sender, action);
+        emit NFTUpdated(tokenId, "userAction", Strings.toString(nftStates[tokenId].userActionCount));
+    }
 }
