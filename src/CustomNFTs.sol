@@ -2,7 +2,6 @@
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
@@ -13,7 +12,7 @@ import "./interfaces/IMetadataRenderer.sol";
  * @title CustomNFTs
  * @dev NFT contract that changes metadata based on external data sources
  */
-contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
+contract CustomNFTs is ERC721, Ownable {
     using Strings for uint256;
 
     uint256 private _tokenIdCounter;
@@ -48,7 +47,10 @@ contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
     event OracleUpdated(address indexed oracle, string oracleType);
     event UserAction(uint256 indexed tokenId, address indexed user, string action);
 
-    constructor(address _weatherOracle, address _timeOracle, address _metadataRenderer) ERC721("Custom NFTs", "CNFT") {
+    constructor(address _weatherOracle, address _timeOracle, address _metadataRenderer)
+        ERC721("Dynamic Weather NFT", "DYNFT")
+        Ownable(msg.sender)
+    {
         weatherOracle = IDataOracle(_weatherOracle);
         timeOracle = IDataOracle(_timeOracle);
         metadataRenderer = IMetadataRenderer(_metadataRenderer);
@@ -58,10 +60,9 @@ contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
      * @dev Mint a new dynamic NFT
      */
     function mint(address to) public onlyOwner returns (uint256) {
-        require(_tokenIdCounter.current() < MAX_SUPPLY, "Max supply reached");
-
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
+        require(_tokenIdCounter < MAX_SUPPLY, "Max supply reached");
+        uint256 tokenId = _tokenIdCounter;
+        _tokenIdCounter++;
 
         _safeMint(to, tokenId);
 
@@ -86,7 +87,7 @@ contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
      * @dev Update NFT based on weather data
      */
     function updateWeather(uint256 tokenId) external {
-        require(_exists(tokenId), "Token does not exist");
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
         require(block.timestamp >= nftStates[tokenId].lastWeatherUpdate + UPDATE_INTERVAL, "Too early to update");
 
         string memory newWeather = weatherOracle.getData();
@@ -94,5 +95,48 @@ contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
         nftStates[tokenId].lastWeatherUpdate = block.timestamp;
 
         emit NFTUpdated(tokenId, "weather", newWeather);
+    }
+
+    /**
+     * @dev Update NFT based on time of day
+     */
+    function updateTimeOfDay(uint256 tokenId) external {
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
+        require(block.timestamp >= nftStates[tokenId].lastTimeUpdate + UPDATE_INTERVAL, "Too early to update");
+
+        string memory newTimeOfDay = _getCurrentTimeOfDay();
+        nftStates[tokenId].currentTimeOfDay = newTimeOfDay;
+        nftStates[tokenId].lastTimeUpdate = block.timestamp;
+
+        emit NFTUpdated(tokenId, "timeOfDay", newTimeOfDay);
+    }
+
+    /**
+     * @dev Record user action that affects NFT
+     */
+    function performUserAction(uint256 tokenId, string calldata action) external {
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
+        require(ownerOf(tokenId) == msg.sender, "Not token owner");
+
+        nftStates[tokenId].userActionCount++;
+
+        emit UserAction(tokenId, msg.sender, action);
+        emit NFTUpdated(tokenId, "userAction", Strings.toString(nftStates[tokenId].userActionCount));
+    }
+
+    /**
+     * @dev Get current time of day based on block timestamp
+     */
+    function _getCurrentTimeOfDay() internal view returns (string memory) {
+        uint256 hour = (block.timestamp / 3600) % 24;
+
+        if (hour >= 6 && hour < 12) return "morning";
+        if (hour >= 12 && hour < 18) return "afternoon";
+        if (hour >= 18 && hour < 22) return "evening";
+        return "night";
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 }
