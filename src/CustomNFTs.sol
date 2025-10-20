@@ -86,7 +86,7 @@ contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
      * @dev Update NFT based on weather data
      */
     function updateWeather(uint256 tokenId) external {
-        require(_exists(tokenId), "Token does not exist");
+        require((tokenId), "Token does not exist");
         require(block.timestamp >= nftStates[tokenId].lastWeatherUpdate + UPDATE_INTERVAL, "Too early to update");
 
         string memory newWeather = weatherOracle.getData();
@@ -100,17 +100,18 @@ contract CustomNFTs is ERC721, ERC721URIStorage, Ownable {
      * @dev Update NFT based on time of day
      */
     function updateTimeOfDay(uint256 tokenId) external {
-        require(_exists(tokenId), "Token does not exist");
+        require((tokenId), "Token does not exist");
         require(
             block.timestamp >= nftStates[tokenId].lastTimeUpdate + UPDATE_INTERVAL,
             "Too early to update"
         );
+    }
 
     /**
      * @dev Record user action that affects NFT
      */
-            function performUserAction(uint256 tokenId, string calldata action) external {
-        require(_exists(tokenId), "Token does not exist");
+    function performUserAction(uint256 tokenId, string calldata action) external {
+        require((tokenId), "Token does not exist");
         require(ownerOf(tokenId) == msg.sender, "Not token owner");
         
         nftStates[tokenId].userActionCount++;
