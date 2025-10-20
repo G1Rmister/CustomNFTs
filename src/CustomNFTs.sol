@@ -56,7 +56,6 @@ contract CustomNFTs is ERC721, Ownable {
         metadataRenderer = IMetadataRenderer(_metadataRenderer);
     }
 
-
     /**
      * @dev Mint a new dynamic NFT
      */
@@ -137,7 +136,7 @@ contract CustomNFTs is ERC721, Ownable {
         return "night";
     }
 
-        function supportsInterface(bytes4 interfaceId) public view override(ERC721) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 }

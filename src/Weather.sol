@@ -10,6 +10,4 @@ import "./interfaces/IDataOracle.sol";
  * @dev Oracle contract that provides weather data for dynamic NFTs
  * This is a mock implementation - in production you'd integrate with real weather APIs
  */
-contract WeatherOracle {     
-
-}
+contract WeatherOracle {}
