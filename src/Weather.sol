@@ -20,4 +20,7 @@ contract WeatherOracle {
 
     // Current weather data
     WeatherData public currentWeather;
+
+        // Authorized updaters (could be Chainlink nodes, API services, etc.)
+    mapping(address => bool) public authorizedUpdaters;
 }
