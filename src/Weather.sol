@@ -11,7 +11,7 @@ import "./interfaces/IDataOracle.sol";
  * This is a mock implementation - in production you'd integrate with real weather APIs
  */
 contract WeatherOracle {
-        struct WeatherData {
+    struct WeatherData {
         string condition;
         int256 temperature;
         uint256 timestamp;
@@ -21,7 +21,7 @@ contract WeatherOracle {
     // Current weather data
     WeatherData public currentWeather;
 
-        // Authorized updaters (could be Chainlink nodes, API services, etc.)
+    // Authorized updaters (could be Chainlink nodes, API services, etc.)
     mapping(address => bool) public authorizedUpdaters;
 
     // Weather conditions mapping
