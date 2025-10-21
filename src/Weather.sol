@@ -17,4 +17,7 @@ contract WeatherOracle {
         uint256 timestamp;
         bool isValid;
     }
+
+    // Current weather data
+    WeatherData public currentWeather;
 }
