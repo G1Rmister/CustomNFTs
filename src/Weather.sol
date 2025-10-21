@@ -10,4 +10,20 @@ import "./interfaces/IDataOracle.sol";
  * @dev Oracle contract that provides weather data for dynamic NFTs
  * This is a mock implementation - in production you'd integrate with real weather APIs
  */
-contract WeatherOracle {}
+contract WeatherOracle {
+    struct WeatherData {
+        string condition;
+        int256 temperature;
+        uint256 timestamp;
+        bool isValid;
+    }
+
+    // Current weather data
+    WeatherData public currentWeather;
+
+    // Authorized updaters (could be Chainlink nodes, API services, etc.)
+    mapping(address => bool) public authorizedUpdaters;
+
+    // Weather conditions mapping
+    string[] public weatherConditions = ["sunny", "cloudy", "rainy", "stormy", "snowy", "foggy"];
+}
