@@ -38,4 +38,12 @@ contract WeatherOracle is IDataOracle, Ownable {
         require(authorizedUpdaters[msg.sender] || msg.sender == owner(), "Not authorized updater");
         _;
     }
+
+        constructor() Ownable(msg.sender) {
+        // Initialize with default weather
+        currentWeather = WeatherData({condition: "sunny", temperature: 22, timestamp: block.timestamp, isValid: true});
+
+        // Authorize owner as updater
+        authorizedUpdaters[msg.sender] = true;
+    }
 }
