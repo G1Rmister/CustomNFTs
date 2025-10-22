@@ -1,14 +1,14 @@
 [profile.default]
 src = "src"
 out = "out"
-solc_version = "0.8.24"
-optimizer = true
-optimizer-runs = 250
-via-ir = false
+libs = ["lib"]
+solc = "0.8.26"
+auto_detect_solc = true
+via_ir = true
 
 remappings = [
+    "forge-std/=lib/forge-std/src/",
     "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
-    "@foundry-rs/=lib/foundry-rs/"
+    "@chainlink/contracts/=lib/chainlink-brownie-contracts/contracts/",
 ]
-
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
