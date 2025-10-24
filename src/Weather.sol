@@ -46,4 +46,27 @@ contract WeatherOracle is IDataOracle, Ownable {
         // Authorize owner as updater
         authorizedUpdaters[msg.sender] = true;
     }
+
+    /**
+     * @dev Update weather data
+     */
+    function updateWeather(string calldata condition, int256 temperature) external onlyAuthorizedUpdater {
+        require(bytes(condition).length > 0, "Invalid condition");
+        require(_isValidWeatherCondition(condition), "Unknown weather condition");
+
+        currentWeather =
+            WeatherData({condition: condition, temperature: temperature, timestamp: block.timestamp, isValid: true});
+
+        emit WeatherUpdated(condition, temperature, block.timestamp);
+    }
+
+    /**
+     * @dev Get current weather data (implements IDataOracle)
+     */
+    function getData() external view returns (string memory) {
+        require(currentWeather.isValid, "No valid weather data");
+        require(block.timestamp <= currentWeather.timestamp + STALE_DATA_THRESHOLD, "Weather data is stale");
+
+        return currentWeather.condition;
+    }
 }
