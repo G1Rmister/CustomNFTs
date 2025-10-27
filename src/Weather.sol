@@ -70,7 +70,7 @@ contract WeatherOracle is IDataOracle, Ownable {
         return currentWeather.condition;
     }
 
-        /**
+    /**
      * @dev Get detailed weather data
      */
     function getDetailedWeatherData() external view returns (WeatherData memory) {
@@ -116,7 +116,7 @@ contract WeatherOracle is IDataOracle, Ownable {
         emit UpdaterAuthorized(updater, authorized);
     }
 
-        /**
+    /**
      * @dev Add new weather condition
      */
     function addWeatherCondition(string calldata condition) external onlyOwner {
