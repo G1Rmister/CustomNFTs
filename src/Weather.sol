@@ -107,4 +107,12 @@ contract WeatherOracle is IDataOracle, Ownable {
         }
         return false;
     }
+
+    /**
+     * @dev Authorize/unauthorize updaters
+     */
+    function setAuthorizedUpdater(address updater, bool authorized) external onlyOwner {
+        authorizedUpdaters[updater] = authorized;
+        emit UpdaterAuthorized(updater, authorized);
+    }
 }
