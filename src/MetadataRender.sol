@@ -6,4 +6,8 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "./interfaces/IMetadataRender.sol";
 
+/**
+ * @title MetadataRender
+ * @dev Generates dynamic metadata and SVG images for NFTs based on their state
+ */
 contract MetadataRender {}
