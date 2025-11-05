@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-interface IMetadataRenderer {
+interface IMetadataRender {
     struct NFTState {
         uint256 lastWeatherUpdate;
         uint256 lastTimeUpdate;
