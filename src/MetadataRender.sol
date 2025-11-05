@@ -10,4 +10,9 @@ import "./interfaces/IMetadataRender.sol";
  * @title MetadataRender
  * @dev Generates dynamic metadata and SVG images for NFTs based on their state
  */
-contract MetadataRender is IMetadataRender, Ownable {}
+contract MetadataRender is IMetadataRender, Ownable {
+
+       constructor() Ownable(msg.sender) {
+        _initializeColorSchemes();
+    }
+}
