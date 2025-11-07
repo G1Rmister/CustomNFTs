@@ -11,14 +11,14 @@ import "./interfaces/IMetadataRender.sol";
  * @dev Generates dynamic metadata and SVG images for NFTs based on their state
  */
 contract MetadataRender is IMetadataRender, Ownable {
-        using Strings for uint256;
+    using Strings for uint256;
 
-       // Color schemes for different weather conditions
+    // Color schemes for different weather conditions
     mapping(string => string) public weatherColors;
     mapping(string => string) public timeColors;
     mapping(string => string) public weatherBackgrounds;
 
-        // Base SVG template parts
+    // Base SVG template parts
     string public constant SVG_HEADER =
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">';
     string public constant SVG_FOOTER = "</svg>";
@@ -53,5 +53,4 @@ contract MetadataRender is IMetadataRender, Ownable {
         weatherBackgrounds["snowy"] = "linear-gradient(45deg, #F0F8FF, #E6E6FA)";
         weatherBackgrounds["foggy"] = "linear-gradient(45deg, #D3D3D3, #C0C0C0)";
     }
-
 }
