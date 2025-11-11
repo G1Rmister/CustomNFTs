@@ -57,7 +57,7 @@ contract MetadataRender is IMetadataRender, Ownable {
     /**
      * @dev Render complete metadata for a token (implements IMetadataRenderer)
      */
-     function renderMetadata(uint256 tokenId, IMetadataRenderer.NFTState memory state)
+    function renderMetadata(uint256 tokenId, IMetadataRenderer.NFTState memory state)
         external
         view
         override
