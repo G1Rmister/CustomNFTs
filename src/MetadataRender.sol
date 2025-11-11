@@ -54,6 +54,9 @@ contract MetadataRender is IMetadataRender, Ownable {
         weatherBackgrounds["foggy"] = "linear-gradient(45deg, #D3D3D3, #C0C0C0)";
     }
 
+    /**
+     * @dev Render complete metadata for a token (implements IMetadataRenderer)
+     */
      function renderMetadata(uint256 tokenId, IMetadataRenderer.NFTState memory state)
         external
         view
