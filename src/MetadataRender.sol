@@ -101,6 +101,9 @@ contract MetadataRender is IMetadataRender, Ownable {
         );
     }
 
+    /**
+     * @dev Generate background gradient
+     */
         function _getBackgroundGradient(string memory weather, string memory timeOfDay)
         internal
         view
