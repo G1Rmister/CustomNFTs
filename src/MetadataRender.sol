@@ -85,7 +85,7 @@ contract MetadataRender is IMetadataRender, Ownable {
     /**
      * @dev Generate SVG image based on NFT state
      */
-        function _generateSVG(uint256 tokenId, IMetadataRenderer.NFTState memory state)
+    function _generateSVG(uint256 tokenId, IMetadataRenderer.NFTState memory state)
         internal
         view
         returns (string memory)
@@ -104,7 +104,7 @@ contract MetadataRender is IMetadataRender, Ownable {
     /**
      * @dev Generate background gradient
      */
-        function _getBackgroundGradient(string memory weather, string memory timeOfDay)
+    function _getBackgroundGradient(string memory weather, string memory timeOfDay)
         internal
         view
         returns (string memory)
