@@ -82,6 +82,9 @@ contract MetadataRender is IMetadataRender, Ownable {
         return string(abi.encodePacked("data:application/json;base64,", Base64.encode(bytes(metadata))));
     }
 
+    /**
+     * @dev Generate SVG image based on NFT state
+     */
         function _generateSVG(uint256 tokenId, IMetadataRenderer.NFTState memory state)
         internal
         view
